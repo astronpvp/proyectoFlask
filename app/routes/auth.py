@@ -38,7 +38,7 @@ def login():
     if not usuario or not check_password_hash(usuario.password, password):
         return jsonify({"mensaje": "Credenciales inválidas"}), 401
 
-    access_token = create_access_token(identity=usuario.id, expires_delta=timedelta(hours=1))
+    access_token = create_access_token(identity=str(usuario.id), expires_delta=timedelta(hours=1))
 
     token_db = Token(usuario_id=usuario.id, token=access_token)
     db.session.add(token_db)
@@ -46,7 +46,7 @@ def login():
 
     response = make_response(jsonify({"mensaje": "Login exitoso"}))
     response.set_cookie(
-        key='access_token',
+        key='access_token_cookie',
         value=access_token,
         httponly=True,
         samesite='Lax',

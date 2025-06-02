@@ -7,8 +7,8 @@ usuarios_bp = Blueprint('usuarios', __name__)
 @usuarios_bp.route('/perfil', methods=['GET'])
 def perfil():
     try:
-        # ✅ Verifica el token JWT desde la cookie automáticamente
-        verify_jwt_in_request()
+        # 👇 Forzar lectura desde la cookie
+        verify_jwt_in_request(locations=['cookies'])
         usuario_id = get_jwt_identity()
         usuario = Usuario.query.get(usuario_id)
 
@@ -23,4 +23,5 @@ def perfil():
         })
 
     except Exception as e:
+        print("DEBUG error JWT:", str(e))  # para depuración
         return jsonify({"mensaje": "Token inválido o ausente"}), 401
