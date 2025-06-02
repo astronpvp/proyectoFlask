@@ -16,7 +16,6 @@ def perfil():
             return jsonify({"mensaje": "Usuario no encontrado"}), 404
 
         return jsonify({
-            jo
             "id": usuario.id,
             "nombre": usuario.nombre,
             "email": usuario.email,
