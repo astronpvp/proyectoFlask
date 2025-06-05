@@ -5,12 +5,13 @@ class Token(db.Model):
     __tablename__ = 'token'
 
     id = db.Column(db.Integer, primary_key=True)
-    usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
+    jti = db.Column(db.String(36), unique=True, nullable=False)  # 🆕 Añadido
     token = db.Column(db.Text, nullable=False)
+    usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
     creado_en = db.Column(db.DateTime, default=datetime.utcnow)
 
-    # Relación opcional: acceder desde usuario.tokens
     usuario = db.relationship('Usuario', backref='tokens')
+
 
 class Usuario(db.Model):
     __tablename__ = 'usuario'  # importante para que el nombre coincida
