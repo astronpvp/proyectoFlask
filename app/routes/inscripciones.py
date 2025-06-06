@@ -35,3 +35,32 @@ def inscribirse_publicacion():
 
     return jsonify({"mensaje": "Inscripción exitosa"}), 201
 
+@inscripciones_bp.route('/mis-publicaciones', methods=['GET'])
+@jwt_required(locations=["cookies"])
+def obtener_publicaciones_inscritas():
+    usuario_id = get_jwt_identity()
+
+    inscripciones = Inscripcion.query.filter_by(usuario_id=usuario_id).all()
+
+    publicaciones = []
+    for inscripcion in inscripciones:
+        pub = inscripcion.publicacion
+        publicaciones.append({
+            "id": pub.id,
+            "tipo": pub.tipo,
+            "titulo": pub.titulo,
+            "descripcion": pub.descripcion,
+            "ubicacion": pub.ubicacion,
+            "tipo_contrato": pub.tipo_contrato,
+            "salario": pub.salario,
+            "requisitos": pub.requisitos,
+            "duracion": pub.duracion,
+            "modalidad": pub.modalidad,
+            "fecha_inicio": pub.fecha_inicio.isoformat() if pub.fecha_inicio else None,
+            "plazas": pub.plazas,
+            "fecha_creacion": pub.fecha_creacion.isoformat() if pub.fecha_creacion else None,
+            "fecha_inscripcion": inscripcion.fecha_inscripcion.isoformat()
+        })
+
+    return jsonify(publicaciones), 200
+
