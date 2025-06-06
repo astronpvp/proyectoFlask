@@ -42,3 +42,35 @@ def crear_publicacion():
     except Exception as e:
         print("ERROR creando publicación:", e)
         return jsonify({"mensaje": "Error al crear publicación"}), 400
+    
+@publicaciones_bp.route('/', methods=['GET'])
+def obtener_publicaciones():
+    tipo = request.args.get('tipo')
+
+    if tipo == 'oferta':
+        publicaciones = Publicacion.query.filter_by(tipo='oferta').all()
+    elif tipo == 'curso':
+        publicaciones = Publicacion.query.filter_by(tipo='curso').all()
+    else:
+        publicaciones = Publicacion.query.all()
+
+    resultado = []
+    for pub in publicaciones:
+        resultado.append({
+            "id": pub.id,
+            "tipo": pub.tipo,
+            "titulo": pub.titulo,
+            "descripcion": pub.descripcion,
+            "ubicacion": pub.ubicacion,
+            "tipo_contrato": pub.tipo_contrato,
+            "salario": pub.salario,
+            "requisitos": pub.requisitos,
+            "duracion": pub.duracion,
+            "modalidad": pub.modalidad,
+            "fecha_inicio": pub.fecha_inicio.isoformat() if pub.fecha_inicio else None,
+            "plazas": pub.plazas,
+            "fecha_creacion": pub.fecha_creacion.isoformat() if pub.fecha_creacion else None
+        })
+
+    return jsonify(resultado), 200
+

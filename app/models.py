@@ -38,3 +38,14 @@ class Publicacion(db.Model):
     fecha_inicio = db.Column(db.Date)
     plazas = db.Column(db.Integer)
     fecha_creacion = db.Column(db.DateTime, default=datetime.utcnow)
+
+class Inscripcion(db.Model):
+    __tablename__ = 'inscripcion'
+
+    id = db.Column(db.Integer, primary_key=True)
+    usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
+    publicacion_id = db.Column(db.Integer, db.ForeignKey('publicacion.id'), nullable=False)
+    fecha_inscripcion = db.Column(db.DateTime, default=datetime.utcnow)
+
+    usuario = db.relationship('Usuario', backref='inscripciones')
+    publicacion = db.relationship('Publicacion', backref='inscripciones')

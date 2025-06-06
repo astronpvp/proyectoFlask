@@ -1,10 +1,12 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
+from flask_migrate import Migrate
 from .config import Config
 
 db = SQLAlchemy()
 jwt = JWTManager()
+migrate = Migrate()
 
 from flask_cors import CORS
 
@@ -14,6 +16,7 @@ def create_app():
 
     db.init_app(app)
     jwt.init_app(app)
+    migrate.init_app(app, db) 
 
     # ✅ Habilitar CORS para todas las rutas y orígenes
     CORS(app, supports_credentials=True)
