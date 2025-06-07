@@ -1,7 +1,11 @@
 "use client";
 import { useState } from 'react';
+import { useRouter } from 'next/navigation'; // ✅ Importa useRouter
+import Image from 'next/image';
 
 export default function Login() {
+  const router = useRouter(); // ✅ Inicializa el router
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [mensaje, setMensaje] = useState('');
@@ -15,7 +19,7 @@ export default function Login() {
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include', // 🔐 esto es esencial para que se guarde la cookie
+        credentials: 'include',
         body: JSON.stringify({ email, password }),
       });
 
@@ -23,10 +27,13 @@ export default function Login() {
 
       if (res.ok) {
         setMensaje('Inicio de sesión correcto ✅');
-        // Aquí podrías redirigir al perfil o dashboard
-        // router.push('/perfil')
+
+        // Espera un momento para mostrar el mensaje antes de redirigir
+        setTimeout(() => {
+          router.push('/home'); // ✅ Redirige al Home
+        }, 1000);
       } else {
-        setMensaje(data.msg || 'credenciales no validas');
+        setMensaje(data.msg || 'Credenciales no válidas');
       }
     } catch (err) {
       setMensaje('Error de red o del servidor');
@@ -36,6 +43,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-white text-black font-sans">
+      <Image src="/logo.png" alt="IngeniaJob logo" width={200} height={50} className="mx-auto mb-4" />
       <div className="w-80 p-6 rounded shadow-lg bg-white">
         <h1 className="text-2xl mb-2">Iniciar sesión</h1>
         <p className="mb-4 text-gray-600">Mantente al día de tu mundo profesional.</p>
@@ -59,7 +67,7 @@ export default function Login() {
           />
 
           <button type="submit" className="w-full p-3 bg-blue-700 text-white rounded-full font-bold">
-            Iniciar sesión
+            Iniciar Sesión
           </button>
         </form>
 

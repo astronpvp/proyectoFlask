@@ -3,8 +3,10 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function Register() {
+  const router = useRouter(); // ✅ Inicializa el router
   const [nombre, setNombre] = useState('');
   const [apellidos, setApellidos] = useState('');
   const [email, setEmail] = useState('');
@@ -34,6 +36,10 @@ export default function Register() {
 
       if (res.ok) {
         setMensaje('Registro exitoso ✅');
+        setTimeout(() => {
+          router.push('/login'); // ✅ Redirige al Home
+        }, 1000);
+      
         // Opcional: redirigir a login
         // router.push('/login')
       } else {
