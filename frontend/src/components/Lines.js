@@ -1,6 +1,38 @@
 "use client";
-
+import { useState, useEffect } from "react";
 export default function Lines({ oferta }) {
+  
+  const [loading, setLoading] = useState(false);
+  const [mensaje, setMensaje] = useState("");
+
+  const handleInscribirse = async () => {
+    setLoading(true);
+    setMensaje("");
+    try {
+      debugger;
+      const res = await fetch("http://localhost:5000/api/inscripciones/inscribirse", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: { "id": oferta.id },
+ // Asumiendo que la oferta tiene un campo 'id'
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        setMensaje("✅ Inscripción realizada con éxito");
+      } else {
+        setMensaje(data.msg || "❌ Error al inscribirse");
+      }
+    } catch (error) {
+      setMensaje("⚠️ Error de red o servidor");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6 mb-6">
       {/* Título y tipo */}
@@ -69,15 +101,20 @@ export default function Lines({ oferta }) {
           {oferta.duracion && (
             <p><span className="font-medium">Duración:</span> {oferta.duracion}</p>
           )}
+          
+          {loading ? "Inscribiendo..." : "Inscribirse"}
+
         </div>
       </div>
 
       {/* Botones: Ver detalle + Inscribirse */}
       <div className="flex justify-end gap-3">
-        <button className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition">
-          Ver detalle
-        </button>
-        <button className="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded hover:bg-green-700 transition">
+        <button onClick={handleInscribirse}
+          disabled={loading}
+          className={`px-4 py-2 text-white text-sm font-medium rounded transition ${
+            loading ? "bg-gray-400 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"
+          }`}
+        >
           Inscribirse
         </button>
       </div>

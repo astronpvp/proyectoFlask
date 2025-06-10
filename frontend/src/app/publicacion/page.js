@@ -66,7 +66,8 @@ export default function Publicacion() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-white text-black font-sans p-6">
-      <Image src="/logo.png" alt="IngeniaJob logo" width={200} height={50} className="mx-auto mb-6" />
+      <Image src="/logo.png" alt="IngeniaJob logo" width={200} height={50} className="mx-auto mb-2" />
+
 
       <div className="w-full max-w-4xl p-8 rounded shadow-lg bg-white border border-gray-200">
         <h1 className="text-2xl font-semibold mb-6 text-center">Crear publicación</h1>
