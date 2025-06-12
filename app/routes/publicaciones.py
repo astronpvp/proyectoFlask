@@ -6,7 +6,7 @@ from datetime import datetime
 
 publicaciones_bp = Blueprint('publicaciones', __name__)
 
-@publicaciones_bp.route('/', methods=['POST'])
+@publicaciones_bp.route('', methods=['POST'])
 def crear_publicacion():
     try:
         # Autenticación mediante cookie
@@ -43,7 +43,7 @@ def crear_publicacion():
         print("ERROR creando publicación:", e)
         return jsonify({"mensaje": "Error al crear publicación"}), 400
     
-@publicaciones_bp.route('/', methods=['GET'])
+@publicaciones_bp.route('', methods=['GET'])
 def obtener_publicaciones():
     tipo = request.args.get('tipo')
 
