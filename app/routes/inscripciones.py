@@ -10,7 +10,10 @@ inscripciones_bp = Blueprint('inscripciones', __name__)
 @jwt_required(locations=["cookies"])
 def inscribirse_publicacion():
     usuario_id = get_jwt_identity()
+    print("USUARIO ID:", usuario_id)
+
     data = request.get_json()
+    print("DEBUG:", data)
     publicacion_id = data.get("id")
 
     if not publicacion_id:

@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-export default function Lines({ oferta }) {
+export default function Lines({ oferta, inscrito, onInscripcionExitosa }) {
   
   const [loading, setLoading] = useState(false);
   const [mensaje, setMensaje] = useState("");
@@ -9,21 +9,23 @@ export default function Lines({ oferta }) {
     setLoading(true);
     setMensaje("");
     try {
-      debugger;
+      
       const res = await fetch("http://localhost:5000/api/inscripciones/inscribirse", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: { "id": oferta.id },
+        body: JSON.stringify({ id: oferta.id }),
  // Asumiendo que la oferta tiene un campo 'id'
       });
       const data = await res.json();
 
       if (res.ok) {
         setMensaje("✅ Inscripción realizada con éxito");
-      } else {
+        onInscripcionExitosa(); // <-- añadir al array de publicaciones inscritas
+      }
+      else {
         setMensaje(data.msg || "❌ Error al inscribirse");
       }
     } catch (error) {
@@ -109,14 +111,16 @@ export default function Lines({ oferta }) {
 
       {/* Botones: Ver detalle + Inscribirse */}
       <div className="flex justify-end gap-3">
-        <button onClick={handleInscribirse}
-          disabled={loading}
+        <button
+          onClick={handleInscribirse}
+          disabled={loading || inscrito}
           className={`px-4 py-2 text-white text-sm font-medium rounded transition ${
-            loading ? "bg-gray-400 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"
+            loading || inscrito ? "bg-gray-400 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"
           }`}
         >
-          Inscribirse
+          {inscrito ? "Ya inscrito" : loading ? "Inscribiendo..." : "Inscribirse"}
         </button>
+
       </div>
     </div>
   );

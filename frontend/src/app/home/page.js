@@ -150,7 +150,13 @@ export default function HomePage() {
 
       <div className="max-w-4xl mx-auto">
         {ofertasFiltradas.map((oferta, idx) => (
-          <Lines key={idx} oferta={oferta} misPublicaciones={misPublicaciones} />
+          <Lines
+  key={idx}
+  oferta={oferta}
+  inscrito={misPublicaciones.some(pub => pub.id === oferta.id)}
+  onInscripcionExitosa={() => setMisPublicaciones(prev => [...prev, oferta])}
+/>
+
         ))}
       </div>
     </div>
