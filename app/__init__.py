@@ -20,7 +20,7 @@ def create_app():
 
     # ✅ Habilitar CORS para todas las rutas y orígenes
     CORS(app,
-         origins=["https://nivex.vercel.app", "http://localhost:3000"],
+         origins=["https://proyecto-flask-puce.vercel.app/", "http://localhost:3000"],
          supports_credentials=True,
          methods=["GET", "POST", "OPTIONS", "PUT", "DELETE"],
          allow_headers=["Content-Type", "Authorization", "X-CSRF-TOKEN"])
