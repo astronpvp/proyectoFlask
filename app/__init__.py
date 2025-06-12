@@ -19,7 +19,18 @@ def create_app():
     migrate.init_app(app, db) 
 
     # ✅ Habilitar CORS para todas las rutas y orígenes
-    CORS(app, supports_credentials=True)
+    CORS(app,
+         origins=["https://nivex.vercel.app", "http://localhost:3000"],
+         supports_credentials=True,
+         methods=["GET", "POST", "OPTIONS", "PUT", "DELETE"],
+         allow_headers=["Content-Type", "Authorization", "X-CSRF-TOKEN"])
+    
+
+    @app.before_request
+    def redirect_https():
+        if not app.debug and request.method != "OPTIONS" and not request.is_secure:
+            url = request.url.replace("http://", "https://", 1)
+            return redirect(url, code=301)
 
     from .routes.auth import auth_bp
     from .routes.publicaciones import publicaciones_bp
@@ -30,6 +41,8 @@ def create_app():
     app.register_blueprint(publicaciones_bp, url_prefix='/api/publicaciones')
     app.register_blueprint(inscripciones_bp, url_prefix='/api/inscripciones')
     app.register_blueprint(usuarios_bp, url_prefix='/api/usuarios')
+
+    
 
     return app
 

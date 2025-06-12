@@ -12,7 +12,8 @@ class Config:
 
     # ✅ ESTA PARTE ES CLAVE:
     JWT_TOKEN_LOCATION = ['cookies']
+    JWT_ACCESS_COOKIE_PATH = "/"
     JWT_COOKIE_NAME = 'access_token_cookie'
-    JWT_COOKIE_SECURE = False     # True si usas HTTPS
-    JWT_COOKIE_SAMESITE = 'Lax'
+    JWT_COOKIE_SECURE = True     # True si usas HTTPS
+    JWT_COOKIE_SAMESITE = "None"
     JWT_COOKIE_CSRF_PROTECT = False
