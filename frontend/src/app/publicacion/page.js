@@ -28,7 +28,7 @@ export default function Publicacion() {
     e.preventDefault();
 
     try {
-      const res = await fetch('http://localhost:5000/api/publicaciones/', {
+      const res = await fetch('https://proyectoflask-20er.onrender.com/api/publicaciones/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

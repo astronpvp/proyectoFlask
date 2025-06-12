@@ -9,7 +9,7 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const res = await fetch('http://localhost:5000/api/usuarios/perfil', {
+      const res = await fetch('https://proyectoflask-20er.onrender.com/api/usuarios/perfil', {
         method: 'GET',
         credentials: 'include', // Necesario para enviar la cookie
       });
@@ -32,7 +32,7 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/logout', {
+      const res = await fetch('https://proyectoflask-20er.onrender.com/api/auth/logout', {
         method: 'POST',
         credentials: 'include', // Necesario para enviar la cookie
       });

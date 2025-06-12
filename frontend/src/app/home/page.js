@@ -15,7 +15,7 @@ export default function HomePage() {
     // Fetch user profile
     const fetchUserProfile = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/usuarios/perfil', {
+        const res = await fetch('https://proyectoflask-20er.onrender.com/api/usuarios/perfil', {
           method: 'GET',
           credentials: 'include',
         });
@@ -36,7 +36,7 @@ export default function HomePage() {
     // Fetch publicaciones inscritas (mis publicaciones)
     const fetchMisPublicaciones = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/inscripciones/mis-publicaciones', {
+        const res = await fetch('https://proyectoflask-20er.onrender.com/api/inscripciones/mis-publicaciones', {
           method: 'GET',  // según curl que diste
           credentials: 'include',
           headers: { 'Content-Type': 'application/json' }
@@ -57,7 +57,7 @@ export default function HomePage() {
     // Fetch ofertas
     const fetchOfertas = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/publicaciones");
+        const res = await fetch("https://proyectoflask-20er.onrender.com/api/publicaciones");
         const data = await res.json();
         if (res.ok) {
           setOfertas(data);

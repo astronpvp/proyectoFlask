@@ -10,7 +10,7 @@ export default function Lines({ oferta, inscrito, onInscripcionExitosa }) {
     setMensaje("");
     try {
       
-      const res = await fetch("http://localhost:5000/api/inscripciones/inscribirse", {
+      const res = await fetch("https://proyectoflask-20er.onrender.com/api/inscripciones/inscribirse", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
