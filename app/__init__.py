@@ -36,18 +36,12 @@ def create_app():
     app.register_blueprint(inscripciones_bp, url_prefix='/api/inscripciones')
     app.register_blueprint(usuarios_bp, url_prefix='/api/usuarios')
 
-    app.before_request(redirect_https)
+    
 
     
 
     return app
 
-from flask import request, redirect, has_request_context
-def redirect_https():
-    # Evita bucles de redirección, solo redirige si NO es HTTPS Y no es una petición OPTIONS
-    if has_request_context() and request.method != "OPTIONS" and not request.is_secure:
-        # Solo redirige si es HTTP
-        if request.headers.get("X-Forwarded-Proto", "http") != "https":
-            return redirect(request.url.replace("http://", "https://", 1), code=301)
+
 
 
