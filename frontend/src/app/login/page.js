@@ -1,10 +1,10 @@
 "use client";
 import { useState } from 'react';
-import { useRouter } from 'next/navigation'; // ✅ Importa useRouter
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
 export default function Login() {
-  const router = useRouter(); // ✅ Inicializa el router
+  const router = useRouter();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -27,10 +27,8 @@ export default function Login() {
 
       if (res.ok) {
         setMensaje('Inicio de sesión correcto ✅');
-
-        // Espera un momento para mostrar el mensaje antes de redirigir
         setTimeout(() => {
-          router.push('/home'); // ✅ Redirige al Home
+          router.push('/home');
         }, 1000);
       } else {
         setMensaje(data.msg || 'Credenciales no válidas');
@@ -72,6 +70,17 @@ export default function Login() {
         </form>
 
         {mensaje && <p className="mt-4 text-center text-sm text-gray-700">{mensaje}</p>}
+
+        {/* Enlace a registro */}
+        <p className="mt-4 text-center text-sm text-gray-700">
+          ¿Aún no estás registrado?{' '}
+          <button
+            onClick={() => router.push('/register')}
+            className="text-blue-600 hover:underline font-semibold"
+          >
+            Regístrate
+          </button>
+        </p>
       </div>
     </div>
   );
