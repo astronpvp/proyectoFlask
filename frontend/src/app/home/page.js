@@ -57,7 +57,11 @@ export default function HomePage() {
     // Fetch ofertas
     const fetchOfertas = async () => {
       try {
-        const res = await fetch("https://proyectoflask-20er.onrender.com/api/publicaciones");
+        const res = await fetch("https://proyectoflask-20er.onrender.com/api/publicaciones", {
+          method: 'GET',  // según curl que diste
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' }
+        });
         const data = await res.json();
         if (res.ok) {
           setOfertas(data);
