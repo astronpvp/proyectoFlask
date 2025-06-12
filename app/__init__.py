@@ -14,9 +14,7 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
-    app.config["JWT_ACCESS_COOKIE_PATH"] = "/"
-    app.config["JWT_COOKIE_NAME"] = "access_token_cookie"
+    
     app.config["JWT_COOKIE_SECURE"] = True  # HTTPS obligatorio
     app.config["JWT_COOKIE_SAMESITE"] = "None"  # para dominios cruzados
     app.config["JWT_COOKIE_CSRF_PROTECT"] = False  # evitar 
