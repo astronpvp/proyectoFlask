@@ -42,9 +42,9 @@ def create_app():
 
     return app
 
-from flask import has_request_context
-
+from flask import request, redirect, has_request_context
 def redirect_https():
     if has_request_context() and request.method != "OPTIONS" and not request.is_secure:
         return redirect(request.url.replace("http://", "https://", 1), code=301)
+
 
