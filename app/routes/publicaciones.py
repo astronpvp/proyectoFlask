@@ -12,6 +12,7 @@ def crear_publicacion():
         # Autenticación mediante cookie
         verify_jwt_in_request(locations=['cookies'])
         usuario_id = get_jwt_identity()
+        print(usuario_id)
         usuario = Usuario.query.get(usuario_id)
 
         # Solo empresa o admin pueden crear publicaciones
@@ -19,6 +20,7 @@ def crear_publicacion():
             return jsonify({"mensaje": "No autorizado"}), 403
 
         data = request.get_json()
+        print(data)
 
         nueva_pub = Publicacion(
             tipo=data.get('tipo'),
