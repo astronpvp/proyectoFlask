@@ -60,8 +60,9 @@ def login():
         key='access_token_cookie',
         value=access_token,
         httponly=True,
-        samesite='Lax',
-        max_age=3600  # 1 hora
+        secure=True,         # ✅ obligatorio para cross-origin en HTTPS
+        samesite='None',     # ✅ obligatorio para enviar cookie cross-site
+        max_age=3600
     )
 
     return response
