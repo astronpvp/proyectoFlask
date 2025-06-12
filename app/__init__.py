@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, redirect, has_request_context
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
@@ -26,12 +26,6 @@ def create_app():
          allow_headers=["Content-Type", "Authorization", "X-CSRF-TOKEN"])
     
 
-    @app.before_request
-    def redirect_https():
-        if not app.debug and request.method != "OPTIONS" and not request.is_secure:
-            url = request.url.replace("http://", "https://", 1)
-            return redirect(url, code=301)
-
     from .routes.auth import auth_bp
     from .routes.publicaciones import publicaciones_bp
     from .routes.inscripciones import inscripciones_bp
@@ -42,7 +36,15 @@ def create_app():
     app.register_blueprint(inscripciones_bp, url_prefix='/api/inscripciones')
     app.register_blueprint(usuarios_bp, url_prefix='/api/usuarios')
 
+    app.before_request(redirect_https)
+
     
 
     return app
+
+from flask import has_request_context
+
+def redirect_https():
+    if has_request_context() and request.method != "OPTIONS" and not request.is_secure:
+        return redirect(request.url.replace("http://", "https://", 1), code=301)
 
