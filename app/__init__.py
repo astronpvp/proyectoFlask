@@ -2,7 +2,12 @@ from flask import Flask, request, redirect, has_request_context
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
-from .config import Config
+
+from datetime import timedelta
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 db = SQLAlchemy()
 jwt = JWTManager()
@@ -12,7 +17,11 @@ from flask_cors import CORS
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object(Config)
+    
+    app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
+    app.config['JWT_SECRET_KEY'] = os.getenv("JWT_SECRET_KEY")
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
     app.config["JWT_ACCESS_COOKIE_PATH"] = "/"
